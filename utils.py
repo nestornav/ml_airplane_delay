@@ -1,4 +1,6 @@
+import seaborn
 import pandas as pd
+import matplotlib.pyplot as plt
 
 from datetime import datetime
 
@@ -31,3 +33,21 @@ def get_day_period(row):
     elif (now_time >= datetime.strptime('19:00:00','%H:%M:%S').time() and now_time <= datetime.strptime('23:59:00','%H:%M:%S').time()) or\
          (now_time >= datetime.strptime('00:00:00','%H:%M:%S').time() and now_time <= datetime.strptime('04:59:00','%H:%M:%S').time()):
         return 'noche'
+
+def pie_plot(df):
+    inner_circle = plt.Circle( (0,0), 0.7, color='white')
+    plt.figure(figsize=(20,10))
+    plt.rcParams['axes.labelsize'] = 20
+    seaborn.set(font_scale = 2)
+    plt.rcParams['text.color'] = 'black'
+    plt.rcParams['font.size'] = 20
+    plt.pie(df['atraso_15'].value_counts()/len(df), labels =df['atraso_15'].value_counts().index, autopct='%.0f%%',
+            wedgeprops = { 'linewidth' : 5, 'edgecolor' : 'white' })
+    p = plt.gcf()
+    p.gca().add_artist(inner_circle)
+
+    return plt.show()
+
+def dump_data(df, path):
+    colums_to_dump =['temporada_alta', 'dif_min', 'atraso_15', 'periodo_dia']
+    df[colums_to_dump].to_csv(path)
