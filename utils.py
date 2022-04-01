@@ -48,6 +48,14 @@ def pie_plot(df):
 
     return plt.show()
 
+def stack_plot(df):
+    fig = plt.figure(figsize=(20, 20))
+    seaborn.displot(data=df, y='OPERA', hue="atraso_15", multiple="stack", height=12,aspect=2, stat='density')
+    plt.tick_params(labelrotation=0)
+    plt.title('Proportion of on-time and dealyed flights per Airline')
+
+    return plt.show()
+
 def dump_data(df, path):
     colums_to_dump =['temporada_alta', 'dif_min', 'atraso_15', 'periodo_dia']
     df[colums_to_dump].to_csv(path)
