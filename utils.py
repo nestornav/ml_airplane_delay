@@ -3,12 +3,13 @@ import pandas as pd
 import matplotlib.pyplot as plt
 
 from datetime import datetime
-
+from sklearn.preprocessing import LabelEncoder
 
 def is_high_season(row):
     now_date = datetime.strptime(row['Fecha-I'],'%Y-%m-%d %H:%M:%S').date()
 
-    if (now_date >= pd.to_datetime('2017-12-15') and now_date <= pd.to_datetime('2017-03-03'))\
+    if (now_date >= pd.to_datetime('2017-12-15') and now_date <= pd.to_datetime('2017-12-31'))\
+    or (now_date >= pd.to_datetime('2017-01-01') and now_date <= pd.to_datetime('2017-03-03'))\
     or (now_date >= pd.to_datetime('2017-07-15') and now_date <= pd.to_datetime('2017-07-31'))\
     or (now_date >= pd.to_datetime('2017-09-11') and now_date <= pd.to_datetime('2017-09-30')):
         return 1
@@ -17,7 +18,7 @@ def is_high_season(row):
 
 def flight_delay(row):
     # This function gets the difference between two dates and then convert the result to minutes.
-    return (datetime.strptime(row['Fecha-O'],'%Y-%m-%d %H:%M:%S') - datetime.strptime(row['Fecha-I'],'%Y-%m-%d %H:%M:%S')).total_seconds()/ 60.0
+    return (datetime.strptime(row['Fecha-O'],'%Y-%m-%d %H:%M:%S') - datetime.strptime(row['Fecha-I'],'%Y-%m-%d %H:%M:%S')).total_seconds()/ 60
 
 def has_delay(row):
     # If dif_min is grater than 15 inutes we will asign 1 otherwise 0
